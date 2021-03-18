@@ -1,9 +1,7 @@
-FROM nginx:latest
+FROM openresty/openresty:latest
 
-RUN apt-get update -y \
-  & apt-get install -y wget vim
+RUN apt-get update -y && \
+  apt-get install -y openresty-opm && \
+  opm install zmartzone/lua-resty-openidc
 
-# RUN mkdir /tmp/nginx-lua \
-#   & cd /tmp/nginx-lua
-
-COPY nginx.conf ./etc/nginx/nginx.conf
+COPY ./nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
