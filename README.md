@@ -55,8 +55,9 @@ I'm using [OpenResty](https://openresty.org/en/) - a full-fledged web platform t
 
 - OpenID Connect integration is supported only in <b>[NGINX-PLUS](https://www.nginx.com/products/nginx/)</b>, but it requires a license
 
-Authentication is handled at the proxy level under a `lua` code block in `nginx.conf`
 The [lua-resty-openidc](https://github.com/zmartzone/lua-resty-openidc) library is used to authenticate requests against the OpenID Connect server (`keycloak`)
+
+Authentication is handled at the proxy level under a `lua` code block in `nginx.conf`
 
 ```lua
 access_by_lua_block {
