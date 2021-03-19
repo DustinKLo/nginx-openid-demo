@@ -56,6 +56,7 @@ I'm using [OpenResty](https://openresty.org/en/) - a full-fledged web platform t
 - OpenID Connect integration is supported only in <b>[NGINX-PLUS](https://www.nginx.com/products/nginx/)</b>, but it requires a license
 
 Authentication is handled at the proxy level under a `lua` code block in `nginx.conf`
+The [lua-resty-openidc](https://github.com/zmartzone/lua-resty-openidc) library is used to authenticate requests against the OpenID Connect server (`keycloak`)
 
 ```lua
 access_by_lua_block {
@@ -75,6 +76,10 @@ access_by_lua_block {
   end
 }
 ```
+The JWT token is validated through the discovery endpoint: `.well-known/openid-configuration`
+* Each incoming request will hit the `keycloak` token introspection endpoint to validate the token
+* You can do offline token validation by adding a `public_key` in the `lua` code block: [LINK](https://github.com/zmartzone/lua-resty-openidc#sample-configuration-for-oauth-20-jwt-token-validation)
+
 
 ## Running the web-server
 
