@@ -29,7 +29,7 @@ $ ./bin/standalone.sh
 4. Make sure to retrieve the `client_secret`
    ![client_secret](./public/04_client_secret.png)
 
-5. Create a user in your realm, make sure to check `enbled` and set a <b>non temporary</b> password in the `credentials` tab
+5. Create a user in your realm, make sure to check `enbled` and set a <b>non-temporary</b> password in the `credentials` tab
    ![create_user](./public/05_create_user.png)
 
 6. Create a `.env` file and set your environment variables
@@ -77,10 +77,11 @@ access_by_lua_block {
   end
 }
 ```
-The JWT token is validated through the discovery endpoint: `.well-known/openid-configuration`
-* Each incoming request will hit the `keycloak` token introspection endpoint to validate the token
-* You can do offline token validation by adding a `public_key` in the `lua` code block: [LINK](https://github.com/zmartzone/lua-resty-openidc#sample-configuration-for-oauth-20-jwt-token-validation)
 
+The JWT token is validated through the discovery endpoint: `.well-known/openid-configuration`
+
+- Each incoming request will hit the `keycloak` token introspection endpoint to validate the token
+- You can do offline token validation by adding a `public_key` in the `lua` code block: [LINK](https://github.com/zmartzone/lua-resty-openidc#sample-configuration-for-oauth-20-jwt-token-validation)
 
 ## Running the web-server
 
@@ -102,11 +103,11 @@ $ docker-compose up --build
 # Attaching to nginx-openid-demo_web-server_1
 ```
 
-2. Retrieve an `access_token` from `keycloak`
+2. Retrieve the `access_token` from `keycloak`
 
 ```bash
-$ export USERNAME=dustinlo
-$ export PASSWORD=password
+$ export USERNAME=<username>
+$ export PASSWORD=<password>
 $ export REALM=test-nginx
 $ export CLIENT_ID=nginx
 $ export CLIENT_SECRET=client_secret_from_keycloak
@@ -120,7 +121,7 @@ $ echo $ACCESS_TOKEN
 # eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiw...Ji9KMRrshGR9psIAMk6upxb3g
 ```
 
-3. Use attach the `access_token` in a `Authorization` header in your request to `elasticsearch`
+3. Attach the `access_token` to the `Authorization` header in your request to `elasticsearch`
 
 ```bash
 $ curl -H "Authorization: Bearer $ACCESS_TOKEN" http://localhost/es/
