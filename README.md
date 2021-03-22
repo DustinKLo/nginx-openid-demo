@@ -1,5 +1,7 @@
 # nginx-openid-demo
 
+![diagram](./public/diagram.png)
+
 This is a demo of an `nginx` implementation with OpenID Connect (`keycloak`) with a Rest API (`elasticsearch`)
 
 ## Requirements
