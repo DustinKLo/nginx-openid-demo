@@ -26,18 +26,13 @@ $ ./bin/standalone.sh
 3. Use `confidentiial`
    ![confidential](./public/03_confidential.png)
 
-4. Make sure to retrieve the `client_secret`
-   ![client_secret](./public/04_client_secret.png)
-
-5. Create a user in your realm, make sure to check `enbled` and set a <b>non-temporary</b> password in the `credentials` tab
+4. Create a user in your realm, make sure to check `enbled` and set a <b>non-temporary</b> password in the `credentials` tab
    ![create_user](./public/05_create_user.png)
 
-6. Create a `.env` file and set your environment variables
+5. Create a `.env` file and set your environment variables
 
 ```bash
 REALM=test-nginx
-CLIENT_ID=nginx
-CLIENT_SECRET=client_secret_from_keycloak
 ```
 
 ## Elasticsearch
@@ -64,15 +59,12 @@ access_by_lua_block {
   local opts = {
     discovery = string.format("http://127.0.0.1/auth/realms/%s/.well-known/openid-configuration", os.getenv("REALM")),
     token_endpoint_auth_method = "client_secret_post",
-    client_id = os.getenv("CLIENT_ID"),
-    client_secret = os.getenv("CLIENT_SECRET"),
-    scope = "openid email profile",
   }
   local json, err, access_token = require("resty.openidc").bearer_jwt_verify(opts)
 
   if err then
   ngx.status = 401
-  ngx.say(string.format([[{"message": "%s"}]], err))
+  ngx.say(string.format([[{"message": "%s"}]], string.gsub(err, '"', '\\"')))
   ngx.exit(ngx.HTTP_UNAUTHORIZED)
   end
 }
